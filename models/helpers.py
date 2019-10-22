@@ -14,5 +14,8 @@ def get_w3():
 
 def set_gas_prices(w3, args):
     est = args[0].estimateGas()
+    default_price = os.environ.get('gas_price') # TODO make a global widget to set price
+    if not default_price:
+        default_price = 2
     args[1]['gas'] = max(args[1]['gas'], est)
-    args[1]['gasPrice'] = w3.toWei(2, 'gwei')
+    args[1]['gasPrice'] = w3.toWei(default_price, 'gwei')

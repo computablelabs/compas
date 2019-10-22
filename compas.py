@@ -10,13 +10,15 @@ from asciimatics.exceptions import ResizeScreenError
 from constants import scenes as S
 from views.dashboard import Dashboard
 from views.ethertoken.detail import Detail as EtherToken
+from views.markettoken.detail import Detail as MarketToken
 
 last_scene = None
 
 def app(screen, scene):
     scenes = [
         Scene([Dashboard(screen)], -1, name=S['DASHBOARD']),
-        Scene([EtherToken(screen)], -1, name=S['ETHER_TOKEN'])
+        Scene([EtherToken(screen)], -1, name=S['ETHER_TOKEN']),
+        Scene([MarketToken(screen)], -1, name=S['MARKET_TOKEN'])
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, allow_int=True)

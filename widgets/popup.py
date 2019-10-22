@@ -1,12 +1,8 @@
-from __future__ import division
-from __future__ import unicode_literals
 from functools import partial
-from asciimatics.widgets import Frame, Layout, TextBox, Button
 from wcwidth import wcswidth
-from pyperclip import copy
-from .helpers import split_text
+from asciimatics.widgets import _split_text, Layout, TextBox, Button, PopUpDialog as PopUp
 
-class PopUpDialog(Frame):
+class PopUpDialog(PopUp):
     """
     A fixed implementation Frame that provides a standard message box dialog.
     """
@@ -38,23 +34,24 @@ class PopUpDialog(Frame):
         width = max(width + 2,
         sum([string_len(x) + 4 for x in buttons]) + len(buttons) + 5)
         width = min(width, screen.width * 2 // 3)
+        width += 2 # enabling the textbox adds the need for an extra char
 
         # Figure out the necessary message and allow for buttons and borders
         # when deciding on height.
         dh = 4 if len(buttons) > 0 else 2
-        self._message = split_text(text, width - 2, screen.height - dh, screen.unicode_aware)
+        self._message = _split_text(text, width - 2, screen.height - dh, screen.unicode_aware)
         height = len(self._message) + dh
 
         # Construct the Frame
         self._data = {'message': self._message}
-        super(PopUpDialog, self).__init__(
+        super(PopUp, self).__init__(
             screen, height, width, self._data, has_shadow=has_shadow, is_modal=True)
 
         # Build up the message box
         layout = Layout([width - 2], fill_frame=True)
         self.add_layout(layout)
         text_box = TextBox(len(self._message), name='message')
-        text_box.disabled = True # maybe try a custom event?
+        # text_box.disabled = True
         layout.add_widget(text_box)
         layout2 = Layout([1 for _ in buttons])
         self.add_layout(layout2)
@@ -65,22 +62,3 @@ class PopUpDialog(Frame):
 
         # Ensure that we have the right palette in place
         self.set_theme(theme)
-
-    def _destroy(self, selected):
-        # when going away, dump my contents into the system clipboard
-        copy(''.join(self.data.get('message')))
-
-        self._scene.remove_effect(self)
-        if self._on_close:
-            self._on_close(selected)
-
-    def clone(self, screen, scene):
-        """
-        Create a clone of this Dialog into a new Screen.
-
-        :param screen: The new Screen object to clone into.
-        :param scene: The new Scene object to clone into.
-        """
-        # Only clone the object if the function is safe to do so.
-        if self._on_close is None or isfunction(self._on_close):
-            scene.add_effect(PopUpDialog(screen, self._text, self._buttons, self._on_close))

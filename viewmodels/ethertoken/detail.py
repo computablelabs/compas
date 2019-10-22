@@ -1,18 +1,12 @@
 from models.ethertoken import EtherToken
+from viewmodels.tokendetail import TokenDetail
 
-class Detail:
+class Detail(TokenDetail):
     def __init__(self):
         self.model = EtherToken()
 
-    def allowance(self, owner, spender):
-        return str(self.model.allowance(owner, spender))
+    def deposit(self, amount):
+        return self.transact(self.model.deposit(amount))
 
-    def balance_of(self, owner):
-        return str(self.model.balance_of(owner))
-
-    def approve(self, spender, amount):
-        tx_hash = self.model.approve(spender, amount)
-        if tx_hash == None:
-            tx_hash = ''
-
-        return tx_hash
+    def withdraw(self, amount):
+        return self.transact(self.model.withdraw(amount))

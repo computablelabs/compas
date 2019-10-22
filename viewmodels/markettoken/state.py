@@ -1,4 +1,5 @@
 from models.markettoken import MarketToken
+import constants as C
 """
 This class creates a simple interface for the markettoken state widget to get
 what it needs from the model
@@ -11,18 +12,14 @@ class State:
     def total_supply(self):
         return str(self.model.total_supply())
 
-    def balance_of(self, owner=None):
+    def balance_of(self):
         """
         NOTE: we assume the public key is set in the environment
         """
-        return str(self.model.balance_of(owner))
+        return str(self.model.balance_of())
 
-    def allowances(self):
-        """
-        There are only certain contracts that are kept in the ether token's
-        allowance mapping. Fetch them here and return a dictionary
-        """
-        pass
+    def allowance(self, spender):
+        return str(self.model.allowance(None, spender))
 
     def hydrate(self, data):
         """
@@ -31,5 +28,9 @@ class State:
         """
         data['market_token_total_supply'] = self.total_supply()
         data['market_token_balance'] = self.balance_of()
+
+        # contracts that may have CMT allowance: Voting, Listing
+        data['market_token_voting_allowance'] = self.allowance(C.VOTING_CONTRACT_ADDRESS)
+        data['market_token_listing_allowance'] = self.allowance(C.LISTING_CONTRACT_ADDRESS)
 
         return data
