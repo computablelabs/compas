@@ -2,10 +2,10 @@
 abstraction of the common methods for both tokens
 """
 import os
-from computable.helpers.transaction import call, send
-from .helpers import get_w3, set_gas_prices
+from computable.helpers.transaction import call
+from .model import Model
 
-class Token:
+class Token(Model):
     def get_symbol(self):
         return call(self.contract.get_symbol())
 
@@ -53,13 +53,3 @@ class Token:
     def transfer_from(self, source, to, amount):
         args = self.contract.transfer_from(source, to, int(amount))
         return self.transact(args)
-
-    def transact(self, args):
-        """
-        once the computable HOC args tuple is assembled this method is the same everywhere
-        """
-        private_key = os.environ.get('private_key')
-        if private_key:
-            set_gas_prices(self.w3, args)
-            tx = send(self.w3, private_key, args)
-            return self.w3.toHex(tx)

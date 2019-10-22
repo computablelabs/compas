@@ -4,6 +4,7 @@ from asciimatics.exceptions import StopApplication, NextScene
 from constants import scenes as S
 from .ethertoken.state import inject_ether_token_state, hydrate_ether_token_state
 from .markettoken.state import inject_market_token_state, hydrate_market_token_state
+from .reserve.state import inject_reserve_state, hydrate_reserve_state
 from models.ui import UI
 
 class Dashboard(Frame):
@@ -25,9 +26,13 @@ class Dashboard(Frame):
         main.add_widget(Button('EtherToken', partial(self.detail, S['ETHER_TOKEN'])), 0)
         main.add_widget(Divider(line_char=''))
         main.add_widget(Button('MarketToken', partial(self.detail, S['MARKET_TOKEN'])), 0)
+        main.add_widget(Divider(line_char=''))
+        main.add_widget(Button('Reserve', partial(self.detail, S['RESERVE'])), 0)
         # add the state widgets to the dashboard
         inject_ether_token_state(main, 2)
         inject_market_token_state(main, 4)
+        main.add_widget(Divider(height=2), 4)
+        inject_reserve_state(main, 4)
         # divide the two layout sections
         br = Layout([100])
         self.add_layout(br)
@@ -52,6 +57,7 @@ class Dashboard(Frame):
 
         self.data = hydrate_ether_token_state()
         self.data = hydrate_market_token_state(self.data)
+        self.data = hydrate_reserve_state(self.data)
 
     def next_theme(self):
         ui = UI()

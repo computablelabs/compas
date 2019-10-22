@@ -42,7 +42,7 @@ class TokenDetail(Frame):
         layout.add_widget(Label(' '), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_symbol), 4)
+        layout.add_widget(Button('Call', self.get_symbol), 4)
 
     def get_symbol(self):
         # we'll use the viewmodel to relay commands
@@ -54,7 +54,7 @@ class TokenDetail(Frame):
         layout.add_widget(Label(' '), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_decimals), 4)
+        layout.add_widget(Button('Call', self.get_decimals), 4)
 
     def get_decimals(self):
         res = self.vm.get_decimals()
@@ -65,7 +65,7 @@ class TokenDetail(Frame):
         layout.add_widget(Label(' '), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_total_supply), 4)
+        layout.add_widget(Button('Call', self.get_total_supply), 4)
 
     def get_total_supply(self):
         res = self.vm.total_supply()
@@ -79,7 +79,7 @@ class TokenDetail(Frame):
         layout.add_widget(Text(label='Owner:', name='balance_of_owner', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_balance_of), 4)
+        layout.add_widget(Button('Call', self.get_balance_of), 4)
 
     def get_balance_of(self):
         owner = self.data.get('balance_of_owner') # can be blank, will default to env
@@ -91,7 +91,7 @@ class TokenDetail(Frame):
         layout.add_widget(Text(label='Owner:', name='allowance_owner', on_change=self.on_changed), 1)
         layout.add_widget(Text(label='Spender:', name='allowance_spender', on_change=self.on_changed), 2)
         layout.add_widget(Label(' '), 3) # placeholders so that our borders don't shift around
-        layout.add_widget(Button('Get', self.get_allowance), 4)
+        layout.add_widget(Button('Call', self.get_allowance), 4)
 
     def get_allowance(self):
         owner = self.data.get('allowance_owner')

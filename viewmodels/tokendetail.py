@@ -1,7 +1,8 @@
+from .viewmodel import ViewModel
 """
 Abstraction of the common methods for token viewmodels
 """
-class TokenDetail:
+class TokenDetail(ViewModel):
     def total_supply(self):
         return str(self.model.total_supply())
 
@@ -38,9 +39,3 @@ class TokenDetail:
 
     def transfer_from(self, source, to, amount):
         return self.transact(self.model.transfer_from(source, to, amount))
-
-    def transact(self, tx_hash):
-        if tx_hash == None:
-            tx_hash = ''
-
-        return tx_hash

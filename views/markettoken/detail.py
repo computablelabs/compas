@@ -43,7 +43,7 @@ class Detail(TokenDetail):
         layout.add_widget(Text(label='Reserve:', name='set_privileged_reserve', on_change=self.on_changed), 1)
         layout.add_widget(Text(label='Listing:', name='set_privileged_listing', on_change=self.on_changed), 2)
         layout.add_widget(Label(' '), 3) # placeholders so that our borders don't shift around
-        layout.add_widget(Button('Get', self.set_privileged), 4)
+        layout.add_widget(Button('Send', self.set_privileged), 4)
 
     def set_privileged(self):
         reserve = self.data.get('set_privileged_reserve')
@@ -57,7 +57,7 @@ class Detail(TokenDetail):
         layout.add_widget(Label(' '), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_privileged), 4)
+        layout.add_widget(Button('Call', self.get_privileged), 4)
 
 
     def get_privileged(self):
@@ -70,7 +70,7 @@ class Detail(TokenDetail):
         layout.add_widget(Text(label='Address:', name='has_privilege_address', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Get', self.get_has_privilege), 4)
+        layout.add_widget(Button('Call', self.get_has_privilege), 4)
 
     def get_has_privilege(self):
         address = self.data.get('has_privilege_address')

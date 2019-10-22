@@ -1,4 +1,4 @@
-from asciimatics.widgets import Label, Divider, Text, Button
+from asciimatics.widgets import Label, Divider, Text
 from viewmodels.markettoken.state import State
 """
 Our subviews simply take a layout and inject their content into it

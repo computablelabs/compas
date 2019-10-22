@@ -12,4 +12,5 @@ scenes = dict(
     DASHBOARD='dashboard',
     ETHER_TOKEN='ethertoken',
     MARKET_TOKEN='markettoken',
+    RESERVE='reserve'
 )
