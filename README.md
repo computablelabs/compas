@@ -3,7 +3,9 @@ COMPutable AScii TUI
 
 ## Installation
 #### Virtual environment
-Note that we are assuming `pip` is installed and available
+_Note that we are assuming `pip` is installed and available_
+
+Open a terminal and perform the following to either confirm or install `virtualenv`:
 
     which virtualenv || pip install --upgrade virtualenv
 
