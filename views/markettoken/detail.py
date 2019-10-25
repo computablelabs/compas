@@ -8,7 +8,7 @@ from widgets.popup import PopUpDialog
 class Detail(TokenDetail):
     def __init__(self, screen):
         super(Detail, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = True, title='FFA::MarketToken', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='FFA::MarketToken', reduce_cpu=True)
 
         ui = UI()
         self.set_theme(ui.get_current_theme())
@@ -16,7 +16,7 @@ class Detail(TokenDetail):
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
         # create a 5 col layout minus any dividers for main
-        main = Layout([1,1,1,1,1], fill_frame=True)
+        main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
         # add contract methods, common first
         self.inject_common(main)
@@ -76,4 +76,3 @@ class Detail(TokenDetail):
         address = self.data.get('has_privilege_address')
         res = self.vm.has_privilege(address)
         self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
-

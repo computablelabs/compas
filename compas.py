@@ -11,6 +11,8 @@ from constants import scenes as S
 from views.dashboard import Dashboard
 from views.ethertoken.detail import Detail as EtherToken
 from views.markettoken.detail import Detail as MarketToken
+from views.voting.detail import Detail as Voting
+from views.parameterizer.detail import Detail as Parameterizer
 from views.reserve.detail import Detail as Reserve
 
 last_scene = None
@@ -20,6 +22,8 @@ def app(screen, scene):
         Scene([Dashboard(screen)], -1, name=S['DASHBOARD']),
         Scene([EtherToken(screen)], -1, name=S['ETHER_TOKEN']),
         Scene([MarketToken(screen)], -1, name=S['MARKET_TOKEN']),
+        Scene([Voting(screen)], -1, name=S['VOTING']),
+        Scene([Parameterizer(screen)], -1, name=S['PARAMETERIZER']),
         Scene([Reserve(screen)], -1, name=S['RESERVE'])
     ]
 

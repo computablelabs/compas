@@ -4,18 +4,19 @@ from asciimatics.exceptions import StopApplication, NextScene
 from constants import scenes as S
 from .ethertoken.state import inject_ether_token_state, hydrate_ether_token_state
 from .markettoken.state import inject_market_token_state, hydrate_market_token_state
+from .voting.state import inject_voting_state, hydrate_voting_state
+from .parameterizer.state import inject_parameterizer_state, hydrate_parameterizer_state
 from .reserve.state import inject_reserve_state, hydrate_reserve_state
 from models.ui import UI
 
 class Dashboard(Frame):
     def __init__(self, screen):
         super(Dashboard, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = True, title='FFA::Dashboard', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='FFA::Dashboard', reduce_cpu=True)
 
         ui = UI()
         self.set_theme(ui.get_current_theme())
-        # create a 4 column layout for the dashboard main
-        # nav | 1 | 2 | 3
+        # create a 4(with dividers) column layout for the dashboard main -> nav | 1 | 2 | 3
         main = Layout([9,1,29,1,29,1,30], fill_frame=True)
         self.add_layout(main)
         # add the divider(s)
@@ -27,12 +28,23 @@ class Dashboard(Frame):
         main.add_widget(Divider(line_char=''))
         main.add_widget(Button('MarketToken', partial(self.detail, S['MARKET_TOKEN'])), 0)
         main.add_widget(Divider(line_char=''))
+        main.add_widget(Button('Voting', partial(self.detail, S['VOTING'])), 0)
+        main.add_widget(Divider(line_char=''))
+        main.add_widget(Button('Parameterizer', partial(self.detail, S['PARAMETERIZER'])), 0)
+        main.add_widget(Divider(line_char=''))
         main.add_widget(Button('Reserve', partial(self.detail, S['RESERVE'])), 0)
+
         # add the state widgets to the dashboard
         inject_ether_token_state(main, 2)
+        main.add_widget(Divider(height=2), 2)
+        inject_parameterizer_state(main, 2)
+
         inject_market_token_state(main, 4)
         main.add_widget(Divider(height=2), 4)
         inject_reserve_state(main, 4)
+
+        inject_voting_state(main, 6)
+
         # divide the two layout sections
         br = Layout([100])
         self.add_layout(br)
@@ -51,12 +63,13 @@ class Dashboard(Frame):
 
         self.fix()
 
-    # TODO we _could_ have empty widgets if this mass reset takes too long...
     def reset(self):
         super(Dashboard, self).reset()
 
         self.data = hydrate_ether_token_state()
         self.data = hydrate_market_token_state(self.data)
+        self.data = hydrate_voting_state(self.data)
+        self.data = hydrate_parameterizer_state(self.data)
         self.data = hydrate_reserve_state(self.data)
 
     def next_theme(self):

@@ -3,6 +3,15 @@ from .helpers import set_gas_prices
 from computable.helpers.transaction import send
 """
 All of our models implement the transact method
+
+Notes:
+    Models are the raw data source used by Viewmodels that transform that data for consumption by views.
+
+    There is only ever a single model for a contract.
+
+    Models know about contracts.
+
+    Models are ignorant of viewmodels and views
 """
 class Model:
     def transact(self, args):

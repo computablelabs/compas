@@ -8,7 +8,7 @@ from widgets.popup import PopUpDialog
 class Detail(Frame):
     def __init__(self, screen):
         super(Detail, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = True, title='FFA::Reserve', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='FFA::Reserve', reduce_cpu=True)
 
         ui = UI()
         self.set_theme(ui.get_current_theme())
