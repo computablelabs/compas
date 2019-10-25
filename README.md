@@ -40,7 +40,7 @@ the running shell session. Note that your `private_key` is never exposed or broa
 anywhere as Compas uses [Computable.py](https://github.com/computablelabs/computable.py/blob/master/computable/helpers/transaction.py#L49)
 to sign transactions locally (offline) and then broadcast the signed transaction via its web3 provider.
 
-So, open a terminal, then:
+So, in a terminal:
 
     export public_key=<0xXxx...>
     export private_key=<Xxx...>
@@ -48,9 +48,11 @@ So, open a terminal, then:
 Done correctly, `echo $public_key` and `$echo $private_key` will show the proper values.
 
 ### Fire it up
-From the root of the repository (/compas/):
+From the root of the repository run the app with:
 
     python compas.py
+
+_Note that you should start the App in the same terminal you exported your keys_
 
 ## Asciimatics
 Their docs on [User Interfaces](https://asciimatics.readthedocs.io/en/stable/widgets.html) has some handy information
