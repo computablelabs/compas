@@ -1,4 +1,5 @@
 from models.ethertoken import EtherToken
+from viewmodels.viewmodel import ViewModel
 import constants as C
 """
 This class creates a simple interface for the ethertoken state widget to get
@@ -6,7 +7,7 @@ what it needs from the model.
 NOTE: Owner is always the env public key on the dashboard
 """
 
-class State:
+class State(ViewModel):
     def __init__(self):
         self.model = EtherToken()
 
@@ -26,6 +27,8 @@ class State:
         """
         Return an object suitable to use for a view's `data` property
         """
+        data['ether_token_address'] = self.get_address()
+        data['ether_token_owner'] = self.get_owner()
         data['ether_token_total_supply'] = self.total_supply()
         data['ether_token_balance'] = self.balance_of()
 

@@ -16,6 +16,10 @@ class TokenDetail(Frame):
         """
         common controls to both tokens
         """
+        self.inject_get_address(layout)
+        self.inject_dividers(layout)
+        self.inject_get_owner(layout)
+        self.inject_dividers(layout)
         self.inject_get_symbol(layout)
         self.inject_dividers(layout)
         self.inject_get_decimals(layout)
@@ -36,6 +40,30 @@ class TokenDetail(Frame):
         self.inject_dividers(layout)
         self.inject_transfer_from(layout)
         self.inject_dividers(layout)
+
+    def inject_get_address(self, layout):
+        layout.add_widget(Label('Get Address'), 0)
+        layout.add_widget(Label(' '), 1)
+        layout.add_widget(Label(' '), 2)
+        layout.add_widget(Label(' '), 3)
+        layout.add_widget(Button('Call', self.get_address), 4)
+
+    def get_address(self):
+        # we'll use the viewmodel to relay commands
+        res = self.vm.get_address()
+        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
+
+    def inject_get_owner(self, layout):
+        layout.add_widget(Label('Get Owner'), 0)
+        layout.add_widget(Label(' '), 1)
+        layout.add_widget(Label(' '), 2)
+        layout.add_widget(Label(' '), 3)
+        layout.add_widget(Button('Call', self.get_owner), 4)
+
+    def get_owner(self):
+        # we'll use the viewmodel to relay commands
+        res = self.vm.get_owner()
+        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_symbol(self, layout):
         layout.add_widget(Label('Get Symbol'), 0)

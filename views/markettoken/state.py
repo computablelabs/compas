@@ -6,6 +6,8 @@ Our subviews simply take a layout and inject their content into it
 def inject_market_token_state(layout, col=0):
     layout.add_widget(Label('Market Token'), col)
     layout.add_widget(Divider(line_char='-'), col)
+    layout.add_widget(Text('Address:', 'market_token_address'), col)
+    layout.add_widget(Text('Owner:', 'market_token_owner'), col)
     layout.add_widget(Text('Total Supply:', 'market_token_total_supply'), col)
     layout.add_widget(Text('Balance:', 'market_token_balance'), col)
     layout.add_widget(Label('Allowances: {'), col)

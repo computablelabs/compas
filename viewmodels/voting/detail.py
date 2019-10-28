@@ -13,7 +13,7 @@ class Detail(ViewModel):
         if len(priv) > 0:
             return '\n'.join(priv)
         else:
-            return ''
+            return 'None'
 
     def has_privilege(self, addr):
         return str(self.model.has_privilege(addr))
@@ -31,7 +31,7 @@ class Detail(ViewModel):
             cand_str = 'Kind: {0}\nOwner: {1}\nStake: {2}\nVote by: {3}\nYea votes: {4}\nNay votes: {5}'
             return cand_str.format(*cand)
         else:
-            return ''
+            return 'None'
 
     def did_pass(self, hash, plurality):
         return str(self.model.did_pass(hash, plurality))
