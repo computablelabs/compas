@@ -14,6 +14,7 @@ from views.markettoken.detail import Detail as MarketToken
 from views.voting.detail import Detail as Voting
 from views.parameterizer.detail import Detail as Parameterizer
 from views.reserve.detail import Detail as Reserve
+from views.datatrust.detail import Detail as Datatrust
 
 last_scene = None
 
@@ -24,7 +25,8 @@ def app(screen, scene):
         Scene([MarketToken(screen)], -1, name=S['MARKET_TOKEN']),
         Scene([Voting(screen)], -1, name=S['VOTING']),
         Scene([Parameterizer(screen)], -1, name=S['PARAMETERIZER']),
-        Scene([Reserve(screen)], -1, name=S['RESERVE'])
+        Scene([Reserve(screen)], -1, name=S['RESERVE']),
+        Scene([Datatrust(screen)], -1, name=S['DATATRUST']),
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, allow_int=True)

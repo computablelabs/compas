@@ -14,5 +14,6 @@ scenes = dict(
     MARKET_TOKEN='markettoken',
     VOTING='voting',
     PARAMETERIZER='parameterizer',
-    RESERVE='reserve'
+    RESERVE='reserve',
+    DATATRUST='datatrust',
 )

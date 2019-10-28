@@ -13,7 +13,7 @@ class Detail(TokenDetail):
         if len(priv) > 0:
             return '\n'.join(priv)
         else:
-            return ''
+            return 'None'
 
     def has_privilege(self, addr):
         return str(self.model.has_privilege(addr))

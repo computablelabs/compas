@@ -6,6 +6,8 @@ Our subviews simply take a layout and inject their content into it
 def inject_ether_token_state(layout, col=0):
     layout.add_widget(Label('Ether Token'), col)
     layout.add_widget(Divider(line_char='-'), col)
+    layout.add_widget(Text('Address:', 'ether_token_address'), col)
+    layout.add_widget(Text('Owner:', 'ether_token_owner'), col)
     layout.add_widget(Text('Total Supply:', 'ether_token_total_supply'), col)
     layout.add_widget(Text('Balance:', 'ether_token_balance'), col)
     layout.add_widget(Label('Allowances: {'), col)

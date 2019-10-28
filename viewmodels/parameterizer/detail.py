@@ -45,7 +45,7 @@ class Detail(ViewModel):
             rep_str = 'Param: {0}\nValue: {1}'
             return rep_str.format(*rep)
         else:
-            return ''
+            return 'None'
 
     def reparameterize(self, param, value):
         return self.transact(self.model.reparameterize(param, value))

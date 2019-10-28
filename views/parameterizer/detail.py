@@ -19,6 +19,10 @@ class Detail(Frame):
         main = Layout([15,40,40,5], fill_frame=True)
         self.add_layout(main)
 
+        self.inject_get_address(main)
+        self.inject_dividers(main)
+        self.inject_get_owner(main)
+        self.inject_dividers(main)
         self.inject_get_cost_per_byte(main)
         self.inject_dividers(main)
         self.inject_get_stake(main)
@@ -58,6 +62,28 @@ class Detail(Frame):
         controls.add_widget(Button('Dashboard', self.dashboard), 4)
 
         self.fix()
+
+    def inject_get_address(self, layout):
+        layout.add_widget(Label('Get Address'), 0)
+        layout.add_widget(Label(' '), 1)
+        layout.add_widget(Label(' '), 2)
+        layout.add_widget(Button('Call', self.get_address), 3)
+
+    def get_address(self):
+        # we'll use the viewmodel to relay commands
+        res = self.vm.get_address()
+        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
+
+    def inject_get_owner(self, layout):
+        layout.add_widget(Label('Get Owner'), 0)
+        layout.add_widget(Label(' '), 1)
+        layout.add_widget(Label(' '), 2)
+        layout.add_widget(Button('Call', self.get_owner), 3)
+
+    def get_owner(self):
+        # we'll use the viewmodel to relay commands
+        res = self.vm.get_owner()
+        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_cost_per_byte(self, layout):
         layout.add_widget(Label('Get Cost Per Byte'), 0)

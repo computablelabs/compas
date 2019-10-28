@@ -1,6 +1,7 @@
 from models.parameterizer import Parameterizer
+from viewmodels.viewmodel import ViewModel
 
-class State:
+class State(ViewModel):
     def __init__(self):
         self.model = Parameterizer()
 
@@ -38,6 +39,8 @@ class State:
         return str(self.model.get_vote_by())
 
     def hydrate(self, data):
+        data['p11r_address'] = self.get_address()
+        data['p11r_owner'] = self.get_owner()
         data['p11r_backend_payment'] = self.get_backend_payment()
         data['p11r_maker_payment'] = self.get_maker_payment()
         data['p11r_reserve_payment'] = self.get_reserve_payment()

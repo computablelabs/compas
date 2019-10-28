@@ -13,6 +13,12 @@ Notes:
     Views know about viewmodels, but not about models.
 """
 class ViewModel:
+    def get_owner(self):
+        return self.model.get_owner()
+
+    def get_address(self):
+        return self.model.get_address()
+
     def transact(self, tx_hash):
         if tx_hash == None:
             tx_hash = ''
