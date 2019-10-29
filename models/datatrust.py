@@ -16,7 +16,9 @@ class Datatrust(Model):
         return call(self.contract.get_reserve())
 
     def get_hash(self, url):
-        return call(self.contract.get_hash(url))
+        # use web3 to send back hex string
+        hashed = call(self.contract.get_hash(url))
+        return self.w3.toHex(hashed)
 
     def get_backend_address(self):
         return call(self.contract.get_backend_address())
