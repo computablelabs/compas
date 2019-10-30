@@ -21,6 +21,6 @@ class ViewModel:
 
     def transact(self, tx_hash):
         if tx_hash == None:
-            tx_hash = ''
+            tx_hash = 'None'
 
         return tx_hash

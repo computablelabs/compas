@@ -8,6 +8,7 @@ from .voting.state import inject_voting_state, hydrate_voting_state
 from .parameterizer.state import inject_parameterizer_state, hydrate_parameterizer_state
 from .reserve.state import inject_reserve_state, hydrate_reserve_state
 from .datatrust.state import inject_datatrust_state, hydrate_datatrust_state
+from .listing.state import inject_listing_state, hydrate_listing_state
 from models.ui import UI
 
 class Dashboard(Frame):
@@ -18,7 +19,7 @@ class Dashboard(Frame):
         ui = UI()
         self.set_theme(ui.get_current_theme())
         # create a 4(with dividers) column layout for the dashboard main -> nav | 1 | 2 | 3
-        main = Layout([9,1,29,1,29,1,30], fill_frame=True)
+        main = Layout([10,1,29,1,29,1,29], fill_frame=True)
         self.add_layout(main)
         # add the divider(s)
         main.add_widget(VerticalDivider(), 1)
@@ -36,6 +37,8 @@ class Dashboard(Frame):
         main.add_widget(Button('Reserve', partial(self.detail, S['RESERVE'])), 0)
         main.add_widget(Divider(line_char=''))
         main.add_widget(Button('Datatrust', partial(self.detail, S['DATATRUST'])), 0)
+        main.add_widget(Divider(line_char=''))
+        main.add_widget(Button('Listing', partial(self.detail, S['LISTING'])), 0)
 
         # add the state widgets to the dashboard
         inject_ether_token_state(main, 2)
@@ -49,6 +52,8 @@ class Dashboard(Frame):
         inject_datatrust_state(main, 4)
 
         inject_voting_state(main, 6)
+        main.add_widget(Divider(height=2), 6)
+        inject_listing_state(main, 6)
 
         # divide the two layout sections
         br = Layout([100])
@@ -77,6 +82,7 @@ class Dashboard(Frame):
         self.data = hydrate_parameterizer_state(self.data)
         self.data = hydrate_reserve_state(self.data)
         self.data = hydrate_datatrust_state(self.data)
+        self.data = hydrate_listing_state(self.data)
 
     def next_theme(self):
         ui = UI()

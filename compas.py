@@ -15,6 +15,7 @@ from views.voting.detail import Detail as Voting
 from views.parameterizer.detail import Detail as Parameterizer
 from views.reserve.detail import Detail as Reserve
 from views.datatrust.detail import Detail as Datatrust
+from views.listing.detail import Detail as Listing
 
 last_scene = None
 
@@ -27,6 +28,7 @@ def app(screen, scene):
         Scene([Parameterizer(screen)], -1, name=S['PARAMETERIZER']),
         Scene([Reserve(screen)], -1, name=S['RESERVE']),
         Scene([Datatrust(screen)], -1, name=S['DATATRUST']),
+        Scene([Listing(screen)], -1, name=S['LISTING']),
     ]
 
     screen.play(scenes, stop_on_resize=True, start_scene=scene, allow_int=True)
