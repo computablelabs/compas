@@ -14,7 +14,7 @@ from models.ui import UI
 class Dashboard(Frame):
     def __init__(self, screen):
         super(Dashboard, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = False, title='FFA::Dashboard', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='::Dashboard::', reduce_cpu=True)
 
         ui = UI()
         self.set_theme(ui.get_current_theme())
