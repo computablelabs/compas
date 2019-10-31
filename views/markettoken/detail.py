@@ -1,6 +1,4 @@
-from asciimatics.widgets import Frame, Layout, Divider, Label, Text, Button
-from constants import scenes as S
-from models.ui import UI
+from asciimatics.widgets import Layout, Label, Text, Button
 from viewmodels.markettoken.detail import Detail as VM
 from views.tokendetail import TokenDetail
 from widgets.popup import PopUpDialog
@@ -8,33 +6,24 @@ from widgets.popup import PopUpDialog
 class Detail(TokenDetail):
     def __init__(self, screen):
         super(Detail, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = False, title='FFA::MarketToken', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='::MarketToken::', reduce_cpu=True)
 
-        ui = UI()
-        self.set_theme(ui.get_current_theme())
-
+        self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
         # create a 5 col layout minus any dividers for main
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
         # add contract methods, common first
-        self.inject_common(main)
+        self.inject_common(main, 5)
 
         self.inject_set_privileged(main)
-        self.inject_dividers(main)
+        self.inject_dividers(main, 5)
         self.inject_get_privileged(main)
-        self.inject_dividers(main)
+        self.inject_dividers(main, 5)
         self.inject_has_privilege(main)
 
-        # divide the two layout sections
-        br = Layout([100])
-        self.add_layout(br)
-        br.add_widget(Divider())
-        # create a row of controls
-        controls = Layout([1,1,1,1,1])
-        self.add_layout(controls)
-        controls.add_widget(Button('Dashboard', self.dashboard), 4)
+        self.inject_footer()
 
         self.fix()
 
@@ -70,9 +59,9 @@ class Detail(TokenDetail):
         layout.add_widget(Text(label='Address:', name='has_privilege_address', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Call', self.get_has_privilege), 4)
+        layout.add_widget(Button('Call', self.has_privilege), 4)
 
-    def get_has_privilege(self):
+    def has_privilege(self):
         address = self.data.get('has_privilege_address')
         res = self.vm.has_privilege(address)
         self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))

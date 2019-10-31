@@ -1,27 +1,22 @@
-from asciimatics.widgets import Frame, Layout, Divider, Label, Text, Button
-from asciimatics.exceptions import NextScene
-from constants import scenes as S
+from asciimatics.widgets import Layout, Label, Text, Button
 from models.ui import UI
 from viewmodels.datatrust.detail import Detail as VM
+from views.detail import Detail
 from widgets.popup import PopUpDialog
 
-class Detail(Frame):
+class Detail(Detail):
     def __init__(self, screen):
         super(Detail, self).__init__(screen, screen.height, screen.width,
-            hover_focus=True, can_scroll = False, title='FFA::Datatrust', reduce_cpu=True)
+            hover_focus=True, can_scroll = False, title='::Datatrust::', reduce_cpu=True)
 
-        ui = UI()
-        self.set_theme(ui.get_current_theme())
-
+        self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
 
-        self.inject_get_address(main)
-        self.inject_dividers(main, 5)
-        self.inject_get_owner(main)
-        self.inject_dividers(main, 5)
+        self.inject_get_address_and_owner(main, 5)
+
         self.inject_register(main)
         self.inject_dividers(main, 5)
         self.inject_resolve_registration(main)
@@ -57,57 +52,32 @@ class Detail(Frame):
         self.inject_set_privileged(main)
         self.inject_dividers(main, 5)
 
-        # divide the two layout sections
         self.inject_footer()
 
         self.fix()
 
-    def inject_get_address(self, layout):
-        layout.add_widget(Label('Get Address'), 0)
-        layout.add_widget(Label(' '), 1)
-        layout.add_widget(Label(' '), 2)
-        layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Call', self.get_address), 4)
-
-    def get_address(self):
-        # we'll use the viewmodel to relay commands
-        res = self.vm.get_address()
-        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
-
-    def inject_get_owner(self, layout):
-        layout.add_widget(Label('Get Owner'), 0)
-        layout.add_widget(Label(' '), 1)
-        layout.add_widget(Label(' '), 2)
-        layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Call', self.get_owner), 4)
-
-    def get_owner(self):
-        # we'll use the viewmodel to relay commands
-        res = self.vm.get_owner()
-        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
-
     def inject_register(self, layout):
         layout.add_widget(Label('Register'), 0)
-        layout.add_widget(Text(label='URL:', name='datatrust_url', on_change=self.on_changed), 1)
+        layout.add_widget(Text(label='URL:', name='register_url', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_register), 4)
+        layout.add_widget(Button('Send', self.register), 4)
 
-    def send_register(self):
-        url = self.data.get('datatrust_url')
+    def register(self):
+        url = self.data.get('register_url')
         if url:
             res = self.vm.register(url)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_resolve_registration(self, layout):
         layout.add_widget(Label('Reslove Registration'), 0)
-        layout.add_widget(Text(label='Hash:', name='datatrust_registration', on_change=self.on_changed), 1)
+        layout.add_widget(Text(label='Hash:', name='resolve_hash', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_resolve_registration), 4)
+        layout.add_widget(Button('Send', self.resolve_registration), 4)
 
-    def send_resolve_registration(self):
-        hash = self.data.get('datatrust_registration')
+    def resolve_registration(self):
+        hash = self.data.get('resolve_hash')
         if hash:
             res = self.vm.resolve_registration(hash)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
@@ -141,9 +111,9 @@ class Detail(Frame):
         layout.add_widget(Text(label='URL:', name='set_backend_url', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_set_backend_url), 4)
+        layout.add_widget(Button('Send', self.set_backend_url), 4)
 
-    def send_set_backend_url(self):
+    def set_backend_url(self):
         url = self.data.get('set_backend_url')
         if url:
             res = self.vm.set_backend_url(url)
@@ -167,9 +137,9 @@ class Detail(Frame):
         layout.add_widget(Text(label='Listing Hash:', name='set_data_hash_listing', on_change=self.on_changed), 1)
         layout.add_widget(Text(label='Data Hash:', name='set_data_hash_data', on_change=self.on_changed), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_set_data_hash), 4)
+        layout.add_widget(Button('Send', self.set_data_hash), 4)
 
-    def send_set_data_hash(self):
+    def set_data_hash(self):
         listing = self.data.get('set_data_hash_listing')
         data = self.data.get('set_data_hash_data')
         if listing and data:
@@ -206,9 +176,9 @@ class Detail(Frame):
         layout.add_widget(Text(label='Hash:', name='request_delivery_hash', on_change=self.on_changed), 1)
         layout.add_widget(Text(label='Amount:', name='request_delivery_amount', on_change=self.on_changed), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_request_delivery), 4)
+        layout.add_widget(Button('Send', self.request_delivery), 4)
 
-    def send_request_delivery(self):
+    def request_delivery(self):
         hash = self.data.get('request_delivery_hash')
         amount = self.data.get('request_delivery_amount')
         if hash and amount:
@@ -229,14 +199,14 @@ class Detail(Frame):
 
     def inject_listing_accessed(self, layout):
         layout.add_widget(Label('Listing Accessed'), 0)
-        layout.add_widget(Text(label='Listing Hash:', name='listing_accessed_listing_hash', on_change=self.on_changed), 1)
-        layout.add_widget(Text(label='Delivery Hash:', name='listing_accessed_delivery_hash', on_change=self.on_changed), 2)
+        layout.add_widget(Text(label='Listing Hash:', name='listing_accessed_listing', on_change=self.on_changed), 1)
+        layout.add_widget(Text(label='Delivery Hash:', name='listing_accessed_delivery', on_change=self.on_changed), 2)
         layout.add_widget(Text(label='Amount:', name='listing_accessed_amount', on_change=self.on_changed), 3)
-        layout.add_widget(Button('Send', self.send_listing_accessed), 4)
+        layout.add_widget(Button('Send', self.listing_accessed), 4)
 
-    def send_listing_accessed(self):
-        listing = self.data.get('listing_accessed_listing_hash')
-        delivery = self.data.get('listing_accessed_delivery_hash')
+    def listing_accessed(self):
+        listing = self.data.get('listing_accessed_listing')
+        delivery = self.data.get('listing_accessed_delivery')
         amount = self.data.get('listing_accessed_amount')
         if listing and delivery and amount:
             res = self.vm.listing_accessed(listing, delivery, amount)
@@ -247,9 +217,9 @@ class Detail(Frame):
         layout.add_widget(Text(label='Hash:', name='delivered_hash', on_change=self.on_changed), 1)
         layout.add_widget(Text(label='Amount:', name='delivered_url', on_change=self.on_changed), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_delivered), 4)
+        layout.add_widget(Button('Send', self.delivered), 4)
 
-    def send_delivered(self):
+    def delivered(self):
         hash = self.data.get('delivered_hash')
         url = self.data.get('delivered_url')
         if hash and url:
@@ -276,8 +246,7 @@ class Detail(Frame):
         layout.add_widget(Button('Call', self.get_reserve), 4)
 
     def get_reserve(self):
-        url = self.data.get('get_reserve')
-        res = self.vm.get_reserve(url)
+        res = self.vm.get_reserve()
         self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_set_privileged(self, layout):
@@ -285,9 +254,9 @@ class Detail(Frame):
         layout.add_widget(Text(label='Listing:', name='set_privileged_listing', on_change=self.on_changed), 1)
         layout.add_widget(Label(' '), 2)
         layout.add_widget(Label(' '), 3)
-        layout.add_widget(Button('Send', self.send_set_privileged), 4)
+        layout.add_widget(Button('Send', self.set_privileged), 4)
 
-    def send_set_privileged(self):
+    def set_privileged(self):
         listing = self.data.get('set_privileged_listing')
         if listing:
             res = self.vm.set_privileged(listing)
@@ -303,5 +272,3 @@ class Detail(Frame):
     def get_privileged(self):
         res = self.vm.get_privileged()
         self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
-
-
