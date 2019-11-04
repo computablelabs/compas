@@ -5,8 +5,8 @@ class Detail(TokenDetail):
     def __init__(self):
         self.model = MarketToken()
 
-    def set_privileged(self, reserve, listing):
-        return self.transact(self.model.set_privileged(reserve, listing))
+    def set_privileged(self, reserve, listing, gas_price):
+        return self.transact(self.model.set_privileged(reserve, listing, gas_price))
 
     def get_privileged(self):
         priv = self.model.get_privileged()

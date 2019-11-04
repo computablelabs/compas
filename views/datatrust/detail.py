@@ -12,6 +12,8 @@ class Detail(Detail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+        self.inject_header()
+
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
 
@@ -65,8 +67,9 @@ class Detail(Detail):
 
     def register(self):
         url = self.data.get('register_url')
-        if url:
-            res = self.vm.register(url)
+        gas_price = self.data.get('gas_price')
+        if url and gas_price:
+            res = self.vm.register(url, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_resolve_registration(self, layout):
@@ -78,8 +81,9 @@ class Detail(Detail):
 
     def resolve_registration(self):
         hash = self.data.get('resolve_hash')
-        if hash:
-            res = self.vm.resolve_registration(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.resolve_registration(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_backend_address(self, layout):
@@ -115,8 +119,9 @@ class Detail(Detail):
 
     def set_backend_url(self):
         url = self.data.get('set_backend_url')
-        if url:
-            res = self.vm.set_backend_url(url)
+        gas_price = self.data.get('gas_price')
+        if url and gas_price:
+            res = self.vm.set_backend_url(url, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_data_hash(self, layout):
@@ -142,8 +147,9 @@ class Detail(Detail):
     def set_data_hash(self):
         listing = self.data.get('set_data_hash_listing')
         data = self.data.get('set_data_hash_data')
-        if listing and data:
-            res = self.vm.set_data_hash(listing, data)
+        gas_price = self.data.get('gas_price')
+        if listing and data and gas_price:
+            res = self.vm.set_data_hash(listing, data, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_bytes_purchased(self, layout):
@@ -181,8 +187,9 @@ class Detail(Detail):
     def request_delivery(self):
         hash = self.data.get('request_delivery_hash')
         amount = self.data.get('request_delivery_amount')
-        if hash and amount:
-            res = self.vm.request_delivery(hash, amount)
+        gas_price = self.data.get('gas_price')
+        if hash and amount and gas_price:
+            res = self.vm.request_delivery(hash, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_access_reward_earned(self, layout):
@@ -208,8 +215,9 @@ class Detail(Detail):
         listing = self.data.get('listing_accessed_listing')
         delivery = self.data.get('listing_accessed_delivery')
         amount = self.data.get('listing_accessed_amount')
-        if listing and delivery and amount:
-            res = self.vm.listing_accessed(listing, delivery, amount)
+        gas_price = self.data.get('gas_price')
+        if listing and delivery and amount and gas_price:
+            res = self.vm.listing_accessed(listing, delivery, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_delivered(self, layout):
@@ -222,8 +230,9 @@ class Detail(Detail):
     def delivered(self):
         hash = self.data.get('delivered_hash')
         url = self.data.get('delivered_url')
-        if hash and url:
-            res = self.vm.delivered(hash, url)
+        gas_price = self.data.get('gas_price')
+        if hash and url and gas_price:
+            res = self.vm.delivered(hash, url, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_hash(self, layout):
@@ -258,8 +267,9 @@ class Detail(Detail):
 
     def set_privileged(self):
         listing = self.data.get('set_privileged_listing')
-        if listing:
-            res = self.vm.set_privileged(listing)
+        gas_price = self.data.get('gas_price')
+        if listing and gas_price:
+            res = self.vm.set_privileged(listing, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_privileged(self, layout):

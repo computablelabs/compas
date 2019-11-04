@@ -11,6 +11,7 @@ class Detail(Detail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+        self.inject_header()
         # create a 3 col layout minus any dividers for main
         main = Layout([1,1,1], fill_frame=True)
         self.add_layout(main)
@@ -55,8 +56,9 @@ class Detail(Detail):
 
     def support(self):
         offer = self.data.get('support_offer')
-        if offer:
-            res = self.vm.support(offer)
+        gas_price = self.data.get('gas_price')
+        if offer and gas_price:
+            res = self.vm.support(offer, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_withdraw(self, layout):
@@ -65,5 +67,7 @@ class Detail(Detail):
         layout.add_widget(Button('Send', self.withdraw), 2)
 
     def withdraw(self):
-        res = self.vm.withdraw()
-        self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
+        gas_price = self.data.get('gas_price')
+        if gas_price:
+            res = self.vm.withdraw(gas_price)
+            self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))

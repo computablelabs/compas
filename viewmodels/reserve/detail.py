@@ -15,8 +15,8 @@ class Detail(ViewModel):
 
         return str(self.model.get_withdrawal_proceeds(addr))
 
-    def support(self, offer):
-        return self.transact(self.model.support(offer))
+    def support(self, offer, gas_price):
+        return self.transact(self.model.support(offer, gas_price))
 
-    def withdraw(self):
-        return self.transact(self.model.withdraw())
+    def withdraw(self, gas_price):
+        return self.transact(self.model.withdraw(gas_price))

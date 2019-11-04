@@ -47,8 +47,8 @@ class Detail(ViewModel):
         else:
             return 'None'
 
-    def reparameterize(self, param, value):
-        return self.transact(self.model.reparameterize(param, value))
+    def reparameterize(self, param, value, gas_price):
+        return self.transact(self.model.reparameterize(param, value, gas_price))
 
-    def resolve_reparam(self, hash):
-        return self.transact(self.model.resolve_reparam(hash))
+    def resolve_reparam(self, hash, gas_price):
+        return self.transact(self.model.resolve_reparam(hash, gas_price))

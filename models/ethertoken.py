@@ -21,10 +21,10 @@ class EtherToken(Token):
         self.contract = ET(account)
         self.contract.at(self.w3, ETHER_TOKEN_CONTRACT_ADDRESS)
 
-    def deposit(self, amount):
-        args = self.contract.deposit(int(amount))
+    def deposit(self, amount, gas_price):
+        args = self.contract.deposit(int(amount), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def withdraw(self, amount):
-        args = self.contract.withdraw(int(amount))
+    def withdraw(self, amount, gas_price):
+        args = self.contract.withdraw(int(amount), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)

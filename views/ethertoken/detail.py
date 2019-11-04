@@ -12,6 +12,8 @@ class Detail(TokenDetail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+        # first add the header
+        self.inject_header()
         # create a 5 col layout minus any dividers for main
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
@@ -36,8 +38,9 @@ class Detail(TokenDetail):
 
     def deposit(self):
         amount = self.data.get('deposit_amount')
-        if amount:
-            res = self.vm.deposit(amount)
+        gas_price = self.data.get('gas_price')
+        if amount and gas_price:
+            res = self.vm.deposit(amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_withdraw(self, layout):
@@ -49,6 +52,7 @@ class Detail(TokenDetail):
 
     def withdraw(self):
         amount = self.data.get('withdraw_amount')
-        if amount:
-            res = self.vm.withdraw(amount)
+        gas_price = self.data.get('gas_price')
+        if amount and gas_price:
+            res = self.vm.withdraw(amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))

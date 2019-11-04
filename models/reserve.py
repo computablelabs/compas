@@ -22,10 +22,10 @@ class Reserve(Model):
 
         return call(self.contract.get_withdrawal_proceeds(addr))
 
-    def support(self, offer):
-        args = self.contract.support(int(offer))
+    def support(self, offer, gas_price):
+        args = self.contract.support(int(offer), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def withdraw(self):
-        args = self.contract.withdraw()
+    def withdraw(self, gas_price):
+        args = self.contract.withdraw({'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)

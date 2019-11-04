@@ -1,13 +1,30 @@
 """
 Abstraction of common functionality for all contract detail views
 """
-from asciimatics.widgets import Frame, Layout, Divider, Label, Button
+from asciimatics.widgets import Frame, Layout, Divider, Label, Text, Button
 from asciimatics.exceptions import NextScene
 from constants import scenes as S
 from models.ui import UI
 from widgets.popup import PopUpDialog
 
 class Detail(Frame):
+    def inject_header(self):
+        """
+        detail-wide gas price setter and a cpl open slots...
+        """
+        header = Layout([33, 34, 33])
+        self.add_layout(header)
+        header.add_widget(Text(label='Gas Price:', name='gas_price', on_change=self.on_changed), 1)
+        self.add_break()
+
+    def add_break(self):
+        """
+        Simply add a layout with a horizontal line across the frame
+        """
+        br = Layout([100])
+        self.add_layout(br)
+        br.add_widget(Divider())
+
     def check_theme(self):
         ui = UI()
         self.set_theme(ui.get_current_theme())
@@ -48,9 +65,7 @@ class Detail(Frame):
         Every detail has at least the <Dashboard> control in it.
         The other 4 slots are open for use...
         """
-        br = Layout([100])
-        self.add_layout(br)
-        br.add_widget(Divider())
+        self.add_break()
         # create a row of controls
         controls = Layout([1,1,1,1,1])
         self.add_layout(controls)

@@ -50,10 +50,10 @@ class Parameterizer(Model):
     def get_reparam(self, hash):
         return call(self.contract.get_reparam(hash))
 
-    def reparameterize(self, param, value):
-        args = self.contract.reparameterize(int(param), int(value))
+    def reparameterize(self, param, value, gas_price):
+        args = self.contract.reparameterize(int(param), int(value), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def resolve_reparam(self, hash):
-        args = self.contract.resolve_reparam(hash)
+    def resolve_reparam(self, hash, gas_price):
+        args = self.contract.resolve_reparam(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)

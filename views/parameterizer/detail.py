@@ -11,6 +11,7 @@ class Detail(Detail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+        self.inject_header()
         # create a 4 col layout minus any dividers for main
         main = Layout([15,40,40,5], fill_frame=True)
         self.add_layout(main)
@@ -181,8 +182,9 @@ class Detail(Detail):
     def reparameterize(self):
         param = self.data.get('reparameterize_param')
         value = self.data.get('reparameterize_value')
-        if param and value:
-            res = self.vm.reparameterize(param, value)
+        gas_price = self.data.get('gas_price')
+        if param and value and gas_price:
+            res = self.vm.reparameterize(param, value, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_resolve_reparam(self, layout):
@@ -193,6 +195,7 @@ class Detail(Detail):
 
     def resolve_reparam(self):
         hash = self.data.get('resolve_reparam_hash')
-        if hash:
-            res = self.vm.resolve_reparam(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.resolve_reparam(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))

@@ -106,8 +106,9 @@ class TokenDetail(Detail):
     def approve(self):
         spender = self.data.get('approve_spender')
         amount = self.data.get('approve_amount')
-        if spender and amount:
-            res = self.vm.approve(spender, amount)
+        gas_price = self.data.get('gas_price')
+        if spender and amount and gas_price:
+            res = self.vm.approve(spender, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_increase_allowance(self, layout):
@@ -120,8 +121,9 @@ class TokenDetail(Detail):
     def increase_allowance(self):
         spender = self.data.get('increase_allowance_spender')
         amount = self.data.get('increase_allowance_amount')
-        if spender and amount:
-            res = self.vm.increase_allowance(spender, amount)
+        gas_price = self.data.get('gas_price')
+        if spender and amount and gas_price:
+            res = self.vm.increase_allowance(spender, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_decrease_allowance(self, layout):
@@ -134,8 +136,9 @@ class TokenDetail(Detail):
     def decrease_allowance(self):
         spender = self.data.get('decrease_allowance_spender')
         amount = self.data.get('decrease_allowance_amount')
-        if spender and amount:
-            res = self.vm.decrease_allowance(spender, amount)
+        gas_price = self.data.get('gas_price')
+        if spender and amount and gas_price:
+            res = self.vm.decrease_allowance(spender, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_transfer(self, layout):
@@ -148,8 +151,9 @@ class TokenDetail(Detail):
     def transfer(self):
         to = self.data.get('transfer_to')
         amount = self.data.get('transfer_amount')
-        if to and amount:
-            res = self.vm.transfer(to, amount)
+        gas_price = self.data.get('gas_price')
+        if to and amount and gas_price:
+            res = self.vm.transfer(to, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_transfer_from(self, layout):
@@ -163,6 +167,7 @@ class TokenDetail(Detail):
         source = self.data.get('transfer_from_source')
         to = self.data.get('transfer_from_to')
         amount = self.data.get('transfer_from_amount')
-        if source and to and amount:
-            res = self.vm.transfer_from(source, to, amount)
+        gas_price = self.data.get('gas_price')
+        if source and to and amount and gas_price:
+            res = self.vm.transfer_from(source, to, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))

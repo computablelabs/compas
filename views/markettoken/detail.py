@@ -11,6 +11,9 @@ class Detail(TokenDetail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+
+        self.inject_header()
+
         # create a 5 col layout minus any dividers for main
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
@@ -37,8 +40,9 @@ class Detail(TokenDetail):
     def set_privileged(self):
         reserve = self.data.get('set_privileged_reserve')
         listing = self.data.get('set_privileged_listing')
-        if reserve and listing:
-            res = self.vm.set_privileged(reserve, listing)
+        gas_price = self.data.get('gas_price')
+        if reserve and listing and gas_price:
+            res = self.vm.set_privileged(reserve, listing, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_privileged(self, layout):
