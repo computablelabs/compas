@@ -22,8 +22,8 @@ class MarketToken(Token):
         self.contract = MT(account)
         self.contract.at(self.w3, MARKET_TOKEN_CONTRACT_ADDRESS)
 
-    def set_privileged(self, reserve, listing):
-        args = self.contract.set_privileged(reserve, listing)
+    def set_privileged(self, reserve, listing, gas_price):
+        args = self.contract.set_privileged(reserve, listing, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_privileged(self):

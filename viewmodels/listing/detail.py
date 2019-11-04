@@ -17,23 +17,23 @@ class Detail(ViewModel):
         else:
             return 'None'
 
-    def list(self, hash):
-        return self.transact(self.model.list(hash))
+    def list(self, hash, gas_price):
+        return self.transact(self.model.list(hash, gas_price))
 
-    def withdraw_from_listing(self, hash, amount):
-        return self.transact(self.model.withdraw_from_listing(hash, amount))
+    def withdraw_from_listing(self, hash, amount, gas_price):
+        return self.transact(self.model.withdraw_from_listing(hash, amount, gas_price))
 
-    def resolve_application(self, hash):
-        return self.transact(self.model.resolve_application(hash))
+    def resolve_application(self, hash, gas_price):
+        return self.transact(self.model.resolve_application(hash, gas_price))
 
-    def claim_access_reward(self, hash):
+    def claim_access_reward(self, hash, gas_price):
         return self.transact(self.model.claim_access_reward(hash))
 
-    def challenge(self, hash):
-        return self.transact(self.model.challenge(hash))
+    def challenge(self, hash, gas_price):
+        return self.transact(self.model.challenge(hash, gas_price))
 
-    def resolve_challenge(self, hash):
-        return self.transact(self.model.resolve_challenge(hash))
+    def resolve_challenge(self, hash, gas_price):
+        return self.transact(self.model.resolve_challenge(hash, gas_price))
 
-    def exit(self, hash):
-        return self.transact(self.model.exit(hash))
+    def exit(self, hash, gas_price):
+        return self.transact(self.model.exit(hash, gas_price))

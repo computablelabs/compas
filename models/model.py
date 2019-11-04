@@ -20,6 +20,12 @@ class Model:
     def get_address(self):
         return self.contract.address
 
+    def gwei_to_wei(self, n):
+        """
+        Our gas price control will have passed a gwei denomination, expand it to wei
+        """
+        return self.w3.toWei(n, 'gwei')
+
     def transact(self, args):
         """
         once the computable HOC args tuple is assembled this method is the same everywhere

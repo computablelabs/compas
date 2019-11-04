@@ -18,32 +18,32 @@ class Listing(Model):
     def get_listing(self, hash):
         return call(self.contract.get_listing(hash))
 
-    def list(self, hash):
-        args = self.contract.list(hash)
+    def list(self, hash, gas_price):
+        args = self.contract.list(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def withdraw_from_listing(self, hash, amount):
-        args = self.contract.withdraw_from_listing(hash, int(amount))
+    def withdraw_from_listing(self, hash, amount, gas_price):
+        args = self.contract.withdraw_from_listing(hash, int(amount), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def resolve_application(self, hash):
-        args = self.contract.resolve_application(hash)
+    def resolve_application(self, hash, amount, gas_price):
+        args = self.contract.resolve_application(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def claim_access_reward(self, hash):
-        args = self.contract.claim_access_reward(hash)
+    def claim_access_reward(self, hash, gas_price):
+        args = self.contract.claim_access_reward(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def challenge(self, hash):
-        args = self.contract.challenge(hash)
+    def challenge(self, hash, gas_price):
+        args = self.contract.challenge(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def resolve_challenge(self, hash):
-        args = self.contract.resolve_challenge(hash)
+    def resolve_challenge(self, hash, gas_price):
+        args = self.contract.resolve_challenge(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def exit(self, hash):
-        args = self.contract.exit(hash)
+    def exit(self, hash, gas_price):
+        args = self.contract.exit(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     # this is not an actual contract method, but the application of a helper to grep logs...

@@ -23,31 +23,31 @@ class Datatrust(Model):
     def get_backend_address(self):
         return call(self.contract.get_backend_address())
 
-    def set_backend_url(self, url):
-        args = self.contract.set_backend_url(url)
+    def set_backend_url(self, url, gas_price):
+        args = self.contract.set_backend_url(url, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_backend_url(self):
         return call(self.contract.get_backend_url())
 
     # NOTE that the msg.sender can only be the the registered datatrust address
-    def set_data_hash(self, listing, data):
-        args = self.contract.set_data_hash(listing, data)
+    def set_data_hash(self, listing, data, gas_price):
+        args = self.contract.set_data_hash(listing, data, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_data_hash(self, listing):
         return call(self.contract.get_data_hash(listing))
 
-    def register(self, url):
-        args = self.contract.register(url)
+    def register(self, url, gas_price):
+        args = self.contract.register(url, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def resolve_registration(hash):
-        args = self.contract.resolve_registration(hash)
+    def resolve_registration(hash, gas_price):
+        args = self.contract.resolve_registration(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def request_delivery(self, hash, amount):
-        args = self.contract.request_delivery(hash, int(amount))
+    def request_delivery(self, hash, amount, gas_price):
+        args = self.contract.request_delivery(hash, int(amount), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_bytes_purchased(self, addr):
@@ -60,20 +60,20 @@ class Datatrust(Model):
         return call(self.contract.get_delivery(hash))
 
     # NOTE that the msg.sender can only be the the registered datatrust address
-    def listing_accessed(self, listing, delivery, amount):
-        args = self.contract.listing_accessed(listing, delivery, int(amount))
+    def listing_accessed(self, listing, delivery, amount, gas_price):
+        args = self.contract.listing_accessed(listing, delivery, int(amount), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_access_reward_earned(self, hash):
         return call(self.contract.get_access_reward_earned(hash))
 
     # NOTE that the msg.sender can only be the the registered datatrust address
-    def delivered(self, delivery, url):
-        args = self.contract.delivered(delivery, url)
+    def delivered(self, delivery, url, gas_price):
+        args = self.contract.delivered(delivery, url, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def set_privileged(self, listing):
-        args = self.contract.set_privileged(listing)
+    def set_privileged(self, listing, gas_price):
+        args = self.contract.set_privileged(listing, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_privileged(self):

@@ -25,17 +25,17 @@ class TokenDetail(ViewModel):
 
         return str(self.model.balance_of(owner))
 
-    def approve(self, spender, amount):
-        return self.transact(self.model.approve(spender, amount))
+    def approve(self, spender, amount, gas_price):
+        return self.transact(self.model.approve(spender, amount, gas_price))
 
-    def increase_allowance(self, spender, amount):
-        return self.transact(self.model.increase_allowance(spender, amount))
+    def increase_allowance(self, spender, amount, gas_price):
+        return self.transact(self.model.increase_allowance(spender, amount, gas_price))
 
-    def decrease_allowance(self, spender, amount):
-        return self.transact(self.model.decrease_allowance(spender, amount))
+    def decrease_allowance(self, spender, amount, gas_price):
+        return self.transact(self.model.decrease_allowance(spender, amount, gas_price))
 
-    def transfer(self, to, amount):
-        return self.transact(self.model.transfer(to, amount))
+    def transfer(self, to, amount, gas_price):
+        return self.transact(self.model.transfer(to, amount, gas_price))
 
-    def transfer_from(self, source, to, amount):
-        return self.transact(self.model.transfer_from(source, to, amount))
+    def transfer_from(self, source, to, amount, gas_price):
+        return self.transact(self.model.transfer_from(source, to, amount, gas_price))

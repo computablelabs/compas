@@ -5,8 +5,8 @@ class Detail(ViewModel):
     def __init__(self):
         self.model = Datatrust()
 
-    def set_privileged(self, listing):
-        return self.transact(self.model.set_privileged(listing))
+    def set_privileged(self, listing, gas_price):
+        return self.transact(self.model.set_privileged(listing, gas_price))
 
     def get_privileged(self):
         return self.model.get_privileged()
@@ -27,23 +27,23 @@ class Detail(ViewModel):
         else:
             return url
 
-    def set_backend_url(self, url):
-        return self.transact(self.model.set_backend_url(url))
+    def set_backend_url(self, url, gas_price):
+        return self.transact(self.model.set_backend_url(url, gas_price))
 
     def get_data_hash(self, listing):
         return self.model.get_data_hash(listing)
 
-    def set_data_hash(self, listing, data):
-        return self.transact(self.model.set_data_hash(listing, data))
+    def set_data_hash(self, listing, data, gas_price):
+        return self.transact(self.model.set_data_hash(listing, data, gas_price))
 
-    def register(self, url):
-        return self.transact(self.model.register(url))
+    def register(self, url, gas_price):
+        return self.transact(self.model.register(url, gas_price))
 
-    def resolve_registration(self, hash):
-        return self.transact(self.model.resolve_registration(hash))
+    def resolve_registration(self, hash, gas_price):
+        return self.transact(self.model.resolve_registration(hash, gas_price))
 
-    def request_delivery(self, hash, amount):
-        return self.transact(self.model.request_delivery(hash, amount))
+    def request_delivery(self, hash, amount, gas_price):
+        return self.transact(self.model.request_delivery(hash, amount, gas_price))
 
     def get_bytes_purchased(self, addr):
         return str(self.model.get_bytes_purchased(addr))
@@ -57,11 +57,11 @@ class Detail(ViewModel):
         else:
             return 'None'
 
-    def listing_accessed(self, listing, delivery, amount):
-        return self.transact(self.model.listing_accessed(listing, delivery, amount))
+    def listing_accessed(self, listing, delivery, amount, gas_price):
+        return self.transact(self.model.listing_accessed(listing, delivery, amount, gas_price))
 
     def get_access_reward_earned(self, hash):
         return str(self.model.get_access_reward_earned(hash))
 
-    def delivered(self, delivery, url):
-        return self.transact(self.model.delivered(delivery, url))
+    def delivered(self, delivery, url, gas_price):
+        return self.transact(self.model.delivered(delivery, url, gas_price))

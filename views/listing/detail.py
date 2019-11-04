@@ -11,6 +11,9 @@ class Detail(Detail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+
+        self.inject_header()
+
         # create a 4 col layout minus any dividers for main
         main = Layout([15,40,40,5], fill_frame=True)
         self.add_layout(main)
@@ -69,8 +72,9 @@ class Detail(Detail):
 
     def list(self):
         hash = self.data.get('list_hash')
-        if hash:
-            res = self.vm.list(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.list(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_withdraw_from_listing(self, layout):
@@ -82,8 +86,9 @@ class Detail(Detail):
     def withdraw_from_listing(self):
         hash = self.data.get('withdraw_hash')
         amount = self.data.get('withdraw_amount')
-        if hash and amount:
-            res = self.vm.withdraw_from_listing(hash, amount)
+        gas_price = self.data.get('gas_price')
+        if hash and amount and gas_price:
+            res = self.vm.withdraw_from_listing(hash, amount, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_resolve_application(self, layout):
@@ -94,8 +99,9 @@ class Detail(Detail):
 
     def resolve_application(self):
         hash = self.data.get('resolve_application_hash')
-        if hash:
-            res = self.vm.resolve_application(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.resolve_application(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_claim_access_reward(self, layout):
@@ -106,8 +112,9 @@ class Detail(Detail):
 
     def claim_access_reward(self):
         hash = self.data.get('claim_hash')
-        if hash:
-            res = self.vm.claim_access_reward(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.claim_access_reward(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_challenge(self, layout):
@@ -118,8 +125,9 @@ class Detail(Detail):
 
     def challenge(self):
         hash = self.data.get('challenge_hash')
-        if hash:
-            res = self.vm.challenge(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.challenge(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_resolve_challenge(self, layout):
@@ -130,8 +138,9 @@ class Detail(Detail):
 
     def resolve_challenge(self):
         hash = self.data.get('resolve_challenge_hash')
-        if hash:
-            res = self.vm.resolve_challenge(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.resolve_challenge(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_exit(self, layout):
@@ -142,6 +151,7 @@ class Detail(Detail):
 
     def exit(self):
         hash = self.data.get('exit_hash')
-        if hash:
-            res = self.vm.exit(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.exit(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
