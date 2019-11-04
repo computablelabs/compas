@@ -12,8 +12,9 @@ class Voting(Model):
         self.contract = V(account)
         self.contract.at(self.w3, VOTING_CONTRACT_ADDRESS)
 
-    def set_privileged(self, parameterizer, datatrust, listing):
-        args = self.contract.set_privileged(parameterizer, datatrust, listing)
+    def set_privileged(self, parameterizer, datatrust, listing, gas_price):
+        args = self.contract.set_privileged(parameterizer, datatrust,
+            listing, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_privileged(self):
@@ -37,8 +38,8 @@ class Voting(Model):
     def poll_closed(self, hash):
         return call(self.contract.poll_closed(hash))
 
-    def vote(self, hash, option):
-        args = self.contract.vote(hash, int(option))
+    def vote(self, hash, option, gas_price):
+        args = self.contract.vote(hash, int(option), {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     def get_stake(self, hash, addr=None):
@@ -48,8 +49,8 @@ class Voting(Model):
 
         return call(self.contract.get_stake(hash, addr))
 
-    def unstake(self, hash):
-        args = self.contract.unstake(hash)
+    def unstake(self, hash, gas_price):
+        args = self.contract.unstake(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
     # this is not an actual contract method, but the application of a helper to grep logs...
@@ -58,4 +59,4 @@ class Voting(Model):
             addr = self.contract.account
 
         # a placeholder return until get_candidates_by_address is implemented in V2
-        return ['0xFoO', '0xbAR', '0xbAz']
+        return ['0xFoO', '0xbAR', '0xBaZ']

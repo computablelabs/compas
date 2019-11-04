@@ -5,8 +5,9 @@ class Detail(ViewModel):
     def __init__(self):
         self.model = Voting()
 
-    def set_privileged(self, parameterizer, datatrust, listing):
-        return self.transact(self.model.set_privileged(parameterizer, datatrust, listing))
+    def set_privileged(self, parameterizer, datatrust, listing, gas_price):
+        return self.transact(self.model.set_privileged(parameterizer, datatrust,
+            listing, gas_price))
 
     def get_privileged(self):
         priv = self.model.get_privileged()
@@ -39,8 +40,8 @@ class Detail(ViewModel):
     def poll_closed(self, hash):
         return str(self.model.poll_closed(hash))
 
-    def vote(self, hash, option):
-        return self.transact(self.model.vote(hash, option))
+    def vote(self, hash, option, gas_price):
+        return self.transact(self.model.vote(hash, option, gas_price))
 
     def get_stake(self, hash, addr):
         if addr == '':
@@ -48,5 +49,5 @@ class Detail(ViewModel):
 
         return str(self.model.get_stake(hash, addr))
 
-    def unstake(self, hash):
-        return self.transact(self.model.unstake(hash))
+    def unstake(self, hash, gas_price):
+        return self.transact(self.model.unstake(hash, gas_price))

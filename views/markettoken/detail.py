@@ -11,6 +11,9 @@ class Detail(TokenDetail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+
+        self.inject_header()
+
         # create a 5 col layout minus any dividers for main
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)

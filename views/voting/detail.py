@@ -11,6 +11,7 @@ class Detail(Detail):
         self.check_theme()
         # keep a pointer to the viewmodel so my super methods work correctly
         self.vm = VM()
+        self.inject_header()
         # create a 5 col layout minus any dividers for main
         main = Layout([11,28,28,28,5], fill_frame=True)
         self.add_layout(main)
@@ -116,8 +117,9 @@ class Detail(Detail):
     def vote(self):
         hash = self.data.get('vote_hash')
         option = self.data.get('vote_option')
-        if hash and option:
-            res = self.vm.vote(hash, option)
+        gas_price = self.data.get('gas_price')
+        if hash and option and gas_price:
+            res = self.vm.vote(hash, option, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_stake(self, layout):
@@ -142,8 +144,9 @@ class Detail(Detail):
 
     def unstake(self):
         hash = self.data.get('unstake_hash')
-        if hash:
-            res = self.vm.unstake(hash)
+        gas_price = self.data.get('gas_price')
+        if hash and gas_price:
+            res = self.vm.unstake(hash, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_set_privileged(self, layout):
@@ -157,8 +160,9 @@ class Detail(Detail):
         parameterizer = self.data.get('set_privileged_parameterizer')
         datatrust = self.data.get('set_privileged_datatrust')
         listing = self.data.get('set_privileged_listing')
-        if parameterizer and datatrust and listing:
-            res = self.vm.set_privileged(parameterizer, datatrust, listing)
+        gas_price = self.data.get('gas_price')
+        if parameterizer and datatrust and listing and gas_price:
+            res = self.vm.set_privileged(parameterizer, datatrust, listing, gas_price)
             self._scene.add_effect(PopUpDialog(self._screen, res, ['OK'], has_shadow=True))
 
     def inject_get_privileged(self, layout):
