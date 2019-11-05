@@ -20,7 +20,12 @@ class Reserve(Model):
         if addr == None:
             addr = self.contract.account
 
-        return call(self.contract.get_withdrawal_proceeds(addr))
+        try:
+            ret = call(self.contract.get_withdrawal_proceeds(addr))
+        except Exception:
+            ret = 0
+
+        return ret
 
     def support(self, offer, gas_price):
         args = self.contract.support(int(offer), {'gas_price': self.gwei_to_wei(int(gas_price))})
