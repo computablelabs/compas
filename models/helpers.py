@@ -7,8 +7,8 @@ def get_w3():
     provider = Web3.HTTPProvider(WEB_3_HTTP_URL)
     w3 = Web3(provider)
     w3.eth.defaultAccount = os.environ.get('public_key')
-    if 'skynet' in WEB_3_HTTP_URL:
-        w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+    # we don't need to sniff the provider, we know its POA
+    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     return w3
 
