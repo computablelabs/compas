@@ -33,7 +33,7 @@ class Voting(Model):
         return call(self.contract.get_candidate(hash))
 
     def did_pass(self, hash, plurality):
-        return call(self.contract.did_pass(hash, plurality))
+        return call(self.contract.did_pass(hash, int(plurality)))
 
     def poll_closed(self, hash):
         return call(self.contract.poll_closed(hash))
