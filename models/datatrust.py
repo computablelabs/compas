@@ -42,7 +42,7 @@ class Datatrust(Model):
         args = self.contract.register(url, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
-    def resolve_registration(hash, gas_price):
+    def resolve_registration(self, hash, gas_price):
         args = self.contract.resolve_registration(hash, {'gas_price': self.gwei_to_wei(int(gas_price))})
         return self.transact(args)
 
