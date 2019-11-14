@@ -1,6 +1,5 @@
 import os
 from web3 import Web3
-from web3.middleware import geth_poa_middleware
 from constants import WEB_3_HTTP_URL
 
 def get_w3():
@@ -8,7 +7,6 @@ def get_w3():
     w3 = Web3(provider)
     w3.eth.defaultAccount = os.environ.get('public_key')
     # we don't need to sniff the provider, we know its POA
-    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     return w3
 
