@@ -35,7 +35,7 @@ class Detail(ViewModel):
             return 'None'
 
     def did_pass(self, hash, plurality):
-        return str(self.model.did_pass(hash, plurality))
+        return str(self.model.did_pass(hash, int(plurality)))
 
     def poll_closed(self, hash):
         return str(self.model.poll_closed(hash))
