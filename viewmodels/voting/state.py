@@ -7,10 +7,10 @@ class State(ViewModel):
 
     def get_candidates(self, addr=None):
         # assure was not set to empty str...
-        if addr == '':
-            addr = None
+        if not addr or addr == '':
+            addr = self.model.contract.account
 
-        return(self.model.get_candidates(addr))
+        return(self.model.get_candidates(None, addr))
 
     def hydrate(self, data):
         data['voting_address'] = self.get_address()

@@ -1,7 +1,7 @@
 import os
 from computable.helpers.transaction import call, send
 from computable.contracts import Voting as V
-from constants import VOTING_CONTRACT_ADDRESS
+from constants import VOTING_CONTRACT_ADDRESS, GENESIS_BLOCK
 from .model import Model
 from .helpers import get_w3
 
@@ -54,9 +54,28 @@ class Voting(Model):
         return self.transact(args)
 
     # this is not an actual contract method, but the application of a helper to grep logs...
-    def get_candidates(self, addr=None):
-        if addr == None:
-            addr = self.contract.account
+    def get_candidates(self, kind=None, addr=None, from_block=None, to_block='latest'):
 
-        # a placeholder return until get_candidates_by_address is implemented in V2
-        return ['0xFoO', '0xbAR', '0xBaZ']
+        # normalize the from block
+        fb = from_block if from_block else GENESIS_BLOCK
+
+        # then any arg filters
+        arg_filters = {}
+        if kind:
+            arg_filters['kind'] = kind
+        if addr:
+            arg_filters['owner'] = addr
+
+        if len(arg_filters.keys()):
+            filter = self.contract.deployed.events.CandidateAdded.createFilter(fromBlock=fb, toBlock=to_block,
+                argument_filters=arg_filters)
+        else:
+            filter = self.contract.deployed.events.CandidateAdded.createFilter(fromBlock=fb, toBlock=to_block)
+
+        w3 = self.w3
+        # we only want the hashes from the entries - override the formatter
+        # filter.format_entry = lambda entry: w3.toHex(entry['args']['hash'])
+
+        logs = filter.get_all_entries()
+
+        return list(map(lambda log: w3.toHex(log['args']['hash']), logs))

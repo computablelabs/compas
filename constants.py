@@ -18,3 +18,5 @@ scenes = dict(
     DATATRUST='datatrust',
     LISTING='listing',
 )
+
+GENESIS_BLOCK = 5436555

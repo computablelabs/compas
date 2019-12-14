@@ -51,6 +51,7 @@ class Dashboard(Frame):
         main.add_widget(Divider(height=2), 4)
         inject_datatrust_state(main, 4)
 
+        candidates = self.data.get('voting_candidates')
         inject_voting_state(main, 6)
         main.add_widget(Divider(height=2), 6)
         inject_listing_state(main, 6)
